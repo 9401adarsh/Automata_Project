@@ -1,0 +1,18 @@
+;
+; AdditionTM_in.txt
+;
+; Turing Machine that does the addition of two numbers
+; 0^m10^n for m,n >= 0.
+;
+
+6
+01 X
+q0 0(q1 X R) 1(q5 1 R)
+q1 0(q1 0 R) 1(q2 1 R)
+q2 0(q2 0 R) B(q3 0 L)
+q3 0(q3 0 L) 1(q4 1 L)
+q4 0(q4 0 L) X(q0 X R)
+q5
+*
+
+
