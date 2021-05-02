@@ -511,9 +511,7 @@ int main()
    }
 
     cout<<"Processing has been done"<<endl<<"-------------------------------"<<endl;
-	cout<<"The given shift was "<<shift<<endl;
-    cout<<shift<<endl;
-
+    cout<<"The given shift was "<<shift<<endl;
     // Printing encrypted string ---------------------------------------------------------------------------------------------
 	
 	cout<<"Encrypted Hash Map"<<endl;
