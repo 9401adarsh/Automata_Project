@@ -145,8 +145,6 @@ void nextSymbol(int ScanNumber = 1)     //ReadCurrentSymbolandAssertType, accord
             {
                 case '(': symbol = lparen;  break;
                 case ')': symbol = rparen;  break;
-                //case ',': symbol = comma;   break;
-                //case '-': symbol = dash;    break;
                 case 'q': symbol = _q;      break;
                 case 'b': symbol = _b;      ch = ' '; break;
                 case 'l': symbol = _l;      break;
@@ -343,7 +341,6 @@ int SimulateTM(string ip_string)
 
 	while(q >= 0)
     {
-        //PrintConfiguration(q, tape, head);
         rule_ptr = TM_matrix_ptr[q][CharIndex(tape[head])];
         if(rule_ptr != nullptr)
         {
@@ -431,7 +428,6 @@ int main()
     int shift;
     cout<<"Enter Required Shift"<<endl;
     cin>>shift;
-
 
     // Addition TM, to shift character places for cipher-----------------------------------------------------------------
 
