@@ -195,7 +195,7 @@ void TM_State( int *var )       // Utility function to initialise state for tran
 
 void TM_Transition()   // Utility fn to intialize transitions for a given state
 {
-    char scan_character, rw_character, direction;
+    char character_read, rw_character, direction;
     int nextState;
     TM_transition_rule *rule_ptr;
 
@@ -203,7 +203,7 @@ void TM_Transition()   // Utility fn to intialize transitions for a given state
     {
         if(symbol == _b || symbol == _char)
         {
-            scan_character = special_char;
+            character_read = special_char;
             nextSymbol();
             if(symbol == lparen)
             {
@@ -220,7 +220,7 @@ void TM_Transition()   // Utility fn to intialize transitions for a given state
                         rule_ptr->q = nextState;
                         rule_ptr->w_s = rw_character;
                         rule_ptr->move = direction;
-                        TM_matrix_ptr[state][CharIndex(scan_character)] = rule_ptr;
+                        TM_matrix_ptr[state][CharIndex(character_read)] = rule_ptr;
                         nextSymbol();
                         if(symbol == rparen)
                         {
