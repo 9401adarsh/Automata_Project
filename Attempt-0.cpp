@@ -8,7 +8,7 @@
 using namespace std;
 
 #define nFile 30 //Max 30 characters for file name
-#define nLine 200 //Max 400 characters for a line in input file
+#define nLine 400 //Max 400 characters for a line in input file
 #define nDigits 2 //Max number of decimal digits
 #define bDigits 7 //Max number of binary digits to store all integer states
 #define nStates 100 //Max number of states for the Turning Machine Simulator
@@ -63,17 +63,9 @@ int pos, //Position of Marker on TM Tape;
 
 char* ErrorCodes[] = { "'q'", "number", "'b' or non-special character","'('", "'l', 'r' or '-'", "')'" };
 
-void SkipComment()
-{
-   if ( pos < len && line[ pos ] == '{' )
-   {
-      while ( pos < len && line[ pos++ ] != '}' );
-   }
-}// SkipComment
-
 void SkipBlanks()
 {
-   while ( pos < len && line[ pos ] == ' ' )
+   while (pos < len && line[ pos ] == ' ')
    {
       ++pos;
    }
@@ -81,21 +73,17 @@ void SkipBlanks()
 
 void Error(int i)
 {
-   int j;
-
-   for ( j = 0; j < pos - 1; ++j )
-   {
-      cout<<" ";
-   }
+   for(int j = 0; j < pos-1; j++)
+    	cout<<" ";
    cout<<"^\nError "<<i<<": "<<ErrorCodes[i]<<"expected\n";
 }//ErrorMsg, when wrong syntax is parsed
 
-bool BlankLine(char line[], int len )
+bool BlankLine(string line, int len)
 {
    bool blank = true;
    for (int i = 0; i < len; i++)
    {
-      if ( line[ i ] != ' ' )
+      if (line[i] != ' ')
       {
          blank = false;
          break;
@@ -107,16 +95,16 @@ bool BlankLine(char line[], int len )
 int GetLine(char* line)
 {
    int commentLine = 1;
-   while(commentLine && ( fgets((line), nLine, file ) != NULL) ) 
+   while(commentLine && (fgets((line), nLine, file) != NULL) ) 
    {
       len = strlen( line ) - 1;
       line[ len ] = '\0';
-      if ( BlankLine( line, len ) )
+      if (BlankLine(line,len))
       {
          cout<<"";
          continue;
       }
-      if ( line[ 0 ] != ';' )
+      if (line[0] != ';' )
       {
          commentLine = 0;
       }
@@ -131,8 +119,6 @@ void nextSymbol(int ScanNumber = 1)
     char ch;
     int i;
 
-    SkipBlanks();
-    SkipComment();
     SkipBlanks();
 
     if(pos < len)
@@ -189,15 +175,6 @@ int CharIndex(char a)
    return j;
 }// CharIndex - returns column index for character in transition matrix
 
-void skipComma()
-{
-   if(symbol == comma)
-   {
-      nextSymbol(0);
-   }
-}// skipComma
-
-
 void TM_S( int *var )
 {
    if(symbol == _q) 
@@ -230,12 +207,10 @@ void TM_T()
             {
                 nextSymbol();
                 TM_S(&nextState);
-                //skipComma();
                 if(symbol == _char || symbol == _b)
                 {
                     rw_character = special_char;
                     nextSymbol();
-                    //skipComma();
                     if(symbol == _l || symbol == _r || symbol == dash)
                     {
                         direction = special_char;
@@ -320,13 +295,13 @@ void ReportTM()
 
 }// ReportTM
 
-void PrintConfiguration( int q, string t, int h )
+void PrintConfiguration(int q, string t, int h)
 {
    char c;
    int i;
 
    for(i = 0; i < h; i++)
-      cout<<t[ i ];
+      cout<<t[i];
    
    cout<<"|q"<<q<<">";
    i = h;
@@ -335,7 +310,7 @@ void PrintConfiguration( int q, string t, int h )
    {
       cout<<t[i++];
    }
-   while((c = t[i++]) != ' ')
+   while((c = t[i++])!= ' ')
    {
       cout<<c;
    }
@@ -359,10 +334,11 @@ int SimulateTM(string ip_string)
     q = 0;
     t = 0;
     steps = 0L;
-
-    while(q >= 0)
+    cout<<"The Tape Before Simulation"<<endl;
+	PrintConfiguration(q, tape, head);
+	while(q >= 0)
     {
-        PrintConfiguration(q, tape, head);
+        //PrintConfiguration(q, tape, head);
         rule_ptr = TM_matrix_ptr[q][CharIndex(tape[head])];
         if(rule_ptr != nullptr)
         {
@@ -388,11 +364,14 @@ int SimulateTM(string ip_string)
             break;
 
     }
+    cout<<"The Tape after simulation comes to a stop"<<endl;
     PrintConfiguration(q, tape, head);
     if(q == mStates -1)
         cout<<"Input accepted by TM"<<endl;
     else   
         cout<<"Input not accepted by TM"<<endl;
+    
+    cout<<"--------------------------------------"<<endl;
 
     string final_result(tape);
     int result = 0;
@@ -424,7 +403,6 @@ void encrypt_string(string s)
         else
             encrypted_string.push_back(x);
     }   
-
     cout<<"The encrypted string for "<<s<<" is:-"<<endl;
     cout<<encrypted_string<<endl;
 
@@ -510,28 +488,17 @@ int main()
             atoz_map[i] = SimulateTM(TM_mod_inputs[i]);
    }
 
-    cout<<"Encrypted Hash Map"<<endl;
+    cout<<"Processing has been done"<<endl<<"-------------------------------"<<endl;
+	cout<<"The given shift was "<<shift<<endl;
+    cout<<shift<<endl;
+	
+	cout<<"Encrypted Hash Map"<<endl;
     for(int i = 0; i < 26; i++)
         cout<<atoz_map[i]<<endl;
    
     string ip_string;
     cout<<"Enter String to Encrypt"<<endl;
     cin>>ip_string;
-
     encrypt_string(ip_string);
     return 0;
 }// _tmain
-
-
-
-
-
-
-
-
-
-
-
-
-
-
