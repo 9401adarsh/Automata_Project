@@ -6,7 +6,6 @@ using namespace std;
 #define nFile 30 //Max 30 characters for file name
 #define nLine 400 //Max 400 characters for a line in input file
 #define nDigits 2 //Max number of decimal digits
-#define bDigits 7 //Max number of binary digits to store all integer states
 #define nStates 100 //Max number of states for the Turning Machine Simulator
 #define nAlphabets 20 //Max number of alphabets that a Turing Machine Tape can read and write, including Blank
 
